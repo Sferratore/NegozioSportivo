@@ -54,7 +54,7 @@ public class NegozioDao {
 	
 	public Boolean login(String username, String password) {
 
-        String checkString = "SELECT * FROM utente WHERE username = " + username + "AND password = " + password;
+        String checkString = "SELECT * FROM Utente WHERE username = '" + username + "' AND password = '" + password + "'";
         Utente u = new Utente();
 
         try {
@@ -136,7 +136,7 @@ public class NegozioDao {
 				p.setNome(result.getString("nome"));
 				p.setDescrizione(result.getString("descrizione"));
 				p.setPrezzo(result.getDouble("prezzo"));
-				p.setQuantità(result.getInt("quantita"));
+				p.setQuantità(result.getInt("quantità"));
 
 				this.UtenteLoggato.getCarrello().add(p);
 
@@ -176,7 +176,7 @@ public class NegozioDao {
 				p.setNome(result.getString("nome"));
 				p.setDescrizione(result.getString("descrizione"));
 				p.setPrezzo(result.getDouble("prezzo"));
-				p.setQuantità(result.getInt("quantita"));
+				p.setQuantità(result.getInt("quantità"));
 				boolean removed = this.UtenteLoggato.getCarrello().remove(p);
 
 				if (removed) {
@@ -214,7 +214,7 @@ public class NegozioDao {
 		try {
 			Connection conn = this.connection;
 
-			String query = "insert into prodotto (nome, descrizione, prezzo, " + "quantita values(?, ?, ?, ?)";
+			String query = "insert into prodotto (nome, descrizione, prezzo, " + "quantità) values(?, ?, ?, ?)";
 
 			PreparedStatement prstmt = conn.prepareStatement(query);
 
@@ -282,7 +282,7 @@ public class NegozioDao {
 					int quantitaCarrello = p.getQuantità();
 
 					// Aggiorna la quantità nel database
-					String updateString = "UPDATE Prodotto SET quantita = quantita - ? WHERE id = ?";
+					String updateString = "UPDATE Prodotto SET quantità = quantità - ? WHERE id = ?";
 					PreparedStatement updateSt = connection.prepareStatement(updateString);
 					updateSt.setInt(1, quantitaCarrello);
 					updateSt.setInt(2, idProdotto);

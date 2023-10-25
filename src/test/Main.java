@@ -1,13 +1,17 @@
 package test;
 
 import dao.*;
+import menu.*;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
 		NegozioDao n = new NegozioDao();
-		System.out.println(n.mostraProdotti());
+
+		
+		Menu m = new Menu();
+		m.interagisci();
 	}
 
 }

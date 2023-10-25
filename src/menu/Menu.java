@@ -114,9 +114,9 @@ public class Menu {
 				switch (adminChoice) {
 				case 1:
 					String nome = Utilities.userInput(String.class, "Inserisci nome nuovo prodotto: ");
-					String descrizione = Utilities.userInput(String.class, "Inserisci nome nuovo prodotto: ");
-					Double prezzo = Utilities.userInput(Double.class, "Inserisci nome nuovo prodotto: ");
-					Integer quantita = Utilities.userInput(Integer.class, "Inserisci nome nuovo prodotto: ");
+					String descrizione = Utilities.userInput(String.class, "Inserisci descrizione: ");
+					Double prezzo = Utilities.userInput(Double.class, "Inserisci prezzo: ");
+					Integer quantita = Utilities.userInput(Integer.class, "Inserisci quantità: ");
 					
 					Prodotto newP = new Prodotto(nome, descrizione, prezzo, quantita);
 					Boolean b = negozioDao.aggiungiProdotto(newP);
