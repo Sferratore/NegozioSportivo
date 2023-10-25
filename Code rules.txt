@@ -40,3 +40,17 @@ boolean acquista()
 //Se è admin
 boolean aggiungiProdotto(prodotto P)
 boolean rimuoviProdotto(int prodottoId)
+
+Getters, Setters
+
+-------------Interfaccia programma-----------
+Al costruttore carica un oggetto DAO
+
+Crea un metodo interagisci() che chiama tutte le possibilità, controllando se l'utente è admin o no. Se non vi è nessun utente loggato nell'oggetto DAO, forza il login e poi mettici il menu
+
+Aggiungi semplicemente l'interfacciamento per il caricamento dei parametri delle funzioni
+
+Registra ----> Crea un utente e chiama il metodo della dao con quello
+Login ------> richiedi username e password e logga
+...
+
