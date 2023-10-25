@@ -42,12 +42,7 @@ L'applicazione è stata sviluppata in Java ed è basata su un'architettura clien
 
 4. Creare il database MySQL e le tabelle necessarie eseguendo le seguenti istruzioni SQL presenti su DbSetting.sql
 
-5. Modificare le variabili statiche di connessione al database nel file NegozioDao.java per riflettere la configurazione del tuo database MySQL:
-
-public static String JConnectionClass = "com.mysql.cj.jdbc.Driver";
-public static String dbUsername = "root"; // Sostituire con il tuo nome utente del database
-public static String dbPassword = "password"; // Sostituire con la tua password del database
-public static String dbName = "NegozioSportivo";
+5. Modificare le variabili statiche di connessione al database nel file NegozioDao.java per riflettere la configurazione del tuo database MySQL
 
 6. Eseguire il progetto su Eclipse.
 
