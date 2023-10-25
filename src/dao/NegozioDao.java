@@ -51,6 +51,47 @@ public class NegozioDao {
 		UtenteLoggato = utenteLoggato;
 	}
 
+	
+	public Boolean login(String username, String password) {
+
+        String checkString = "SELECT * FROM utente WHERE username = " + username + "AND password = " + password;
+        Utente u = new Utente();
+
+        try {
+            PreparedStatement prpSt = this.connection.prepareStatement(checkString);
+            
+            ResultSet rs = prpSt.executeQuery();
+            
+            if(rs.next()) {
+                u.setUsername(rs.getString("username"));
+                u.setUsername(rs.getString("email"));
+                u.setUsername(rs.getString("password"));
+                u.setUsername(rs.getString("nome"));
+                u.setUsername(rs.getString("cognome"));
+                u.setAdmin(rs.getBoolean("isAdmin"));
+            } else {
+                System.err.println("nessun utente con queste credeziali");
+                registra(u);
+            }
+        } 
+        catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Something went wrong with the SQL operation: " + e.toString());
+            return false;
+        }
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println("Something went wrong with the operation: " + e.toString());
+            return false;
+        }
+
+        setUtenteLoggato(u);
+        syncDb(); //resyncing
+
+        return true;
+    }
+	
+	
 	public Boolean registra(Utente u) {
 
 		String insertString = "INSERT INTO utente (username, email, password, nome, cognome, isAdmin) VALUES (?, ?, ?, ?, ?, ?)";
