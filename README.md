@@ -73,3 +73,7 @@ TASK 10: implementazione tabella acquisti in DB.
 TASK 11: testing delle implementazioni riguardanti tabella acquisti.
 
 TASK 12: implementazione documentazione
+
+TASK 13: Implementazione ricerca per prodotto.
+
+TASK 14: Testing ricerca per prodotto.
