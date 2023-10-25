@@ -46,5 +46,4 @@ VALUES
     ('Prodotto2', 'Descrizione del prodotto 2', 29.99, 30);
 COMMIT;
 
-
-SELECT * FROM Prodotto
+INSERT INTO Utente VALUES('ADMIN', 'ADMIN@ADMIN.ADMIN', 'scannerfactory', 'ADMIN', 'ADMIN', 1);
