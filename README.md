@@ -26,7 +26,72 @@ L'applicazione è stata sviluppata in Java ed è basata su un'architettura clien
 - MySQL Server
 - JDBC Connector/J versione >=8
 
+## Installazione
 
+1. Clonare il repository:
+
+`git clone https://github.com/tuonome/sport-store-app.git`
+
+2. Aprire il progetto in Eclipse e assicurarsi di avere installato JDK 21. Se non è già installato, è possibile scaricarlo dal sito ufficiale di Oracle e configurarlo in Eclipse.
+
+3. Aggiungere il connector JDBC MySQL (Connector/J) al progetto Eclipse:
+   1. Scaricare l'ultima versione del connettore MySQL dal sito ufficiale di MySQL.
+   2. In Eclipse, fare clic con il pulsante destro del mouse sul progetto e selezionare "Build Path" -> "Configure Build Path".
+   3. Nella scheda "Libraries", fare clic su "Add External JARs" e selezionare il file JAR del connettore MySQL scaricato.
+   4. Fare clic su "Apply and Close" per confermare.
+
+4. Creare il database MySQL e le tabelle necessarie eseguendo le seguenti istruzioni SQL nel tuo server MySQL:
+
+`CREATE DATABASE NegozioSportivo;
+USE NegozioSportivo;
+
+-- Tabella Utente
+CREATE TABLE Utente (
+    username VARCHAR(255) PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    cognome VARCHAR(255) NOT NULL,
+    isAdmin BOOLEAN NOT NULL
+);
+
+-- Tabella Prodotto
+CREATE TABLE Prodotto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descrizione TEXT,
+    prezzo DOUBLE NOT NULL,
+    quantità INT NOT NULL
+);
+
+-- Tabella Acquisti (per collegare Utente e Prodotto acquistato)
+CREATE TABLE Acquisti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255),
+    prodotto_id INT,
+    quantita_acquistata INT NOT NULL,
+    FOREIGN KEY (username) REFERENCES Utente(username),
+    FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id)
+);
+
+-- Tabella Carrello (per gestire i prodotti nel carrello degli utenti)
+CREATE TABLE Carrello (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255),
+    prodotto_id INT,
+    quantita_carrello INT NOT NULL,
+    FOREIGN KEY (username) REFERENCES Utente(username),
+    FOREIGN KEY (prodotto_id) REFERENCES Prodotto(id)
+); `
+
+5. Modificare le variabili statiche di connessione al database nel file NegozioDao.java per riflettere la configurazione del tuo database MySQL:
+
+public static String JConnectionClass = "com.mysql.cj.jdbc.Driver";
+public static String dbUsername = "root"; // Sostituire con il tuo nome utente del database
+public static String dbPassword = "password"; // Sostituire con la tua password del database
+public static String dbName = "NegozioSportivo";
+
+6. Eseguire il progetto su Eclipse.
 
 # Gestione Task Progetto
 
