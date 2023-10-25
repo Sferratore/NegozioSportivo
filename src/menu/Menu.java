@@ -75,39 +75,41 @@ public class Menu {
 			}
 			
 		} else if (u.isAdmin()) {
-			Integer adminChoice = Utilities.userInput(Integer.class, "Benvenuto Admin:" + "\n1 - Aggiungi un Prodotto"
-					+ "\n2 - Rimuovi un Prodotto" + "\n3 - Esci");
-			
-			switch (adminChoice) {
-			case 1:
-				String nome = Utilities.userInput(String.class, "Inserisci nome nuovo prodotto: ");
-				String descrizione = Utilities.userInput(String.class, "Inserisci nome nuovo prodotto: ");
-				Double prezzo = Utilities.userInput(Double.class, "Inserisci nome nuovo prodotto: ");
-				Integer quantita = Utilities.userInput(Integer.class, "Inserisci nome nuovo prodotto: ");
+			while (isStarted) { 
+				Integer adminChoice = Utilities.userInput(Integer.class, "Benvenuto Admin:" + "\n1 - Aggiungi un Prodotto"
+						+ "\n2 - Rimuovi un Prodotto" + "\n3 - Esci");
 				
-				Prodotto newP = new Prodotto(nome, descrizione, prezzo, quantita);
-				Boolean b = negozioDao.aggiungiProdotto(newP);
-				if(b) {
-					System.out.println("aggiunto con successo");
-				} else {
-					System.err.println("non è stato possibile aggiungere");
+				switch (adminChoice) {
+				case 1:
+					String nome = Utilities.userInput(String.class, "Inserisci nome nuovo prodotto: ");
+					String descrizione = Utilities.userInput(String.class, "Inserisci nome nuovo prodotto: ");
+					Double prezzo = Utilities.userInput(Double.class, "Inserisci nome nuovo prodotto: ");
+					Integer quantita = Utilities.userInput(Integer.class, "Inserisci nome nuovo prodotto: ");
+					
+					Prodotto newP = new Prodotto(nome, descrizione, prezzo, quantita);
+					Boolean b = negozioDao.aggiungiProdotto(newP);
+					if(b) {
+						System.out.println("aggiunto con successo");
+					} else {
+						System.err.println("non è stato possibile aggiungere");
+					}
+					break;
+				case 2:
+					Integer removeId = Utilities.userInput(Integer.class, "Inserisci l'id del prodotto da rimuovere");
+					Boolean b1 = negozioDao.rimuoviProdotto(removeId);
+					if(b1) {
+						System.out.println("rimosso con successo");
+					} else {
+						System.err.println("non è stato possibile rimuovere");
+					}
+					break;
+				case 3:
+					System.out.println("** Arrivederci e grazie... **");
+					isStarted = !isStarted;
+					break;
+				default:
+					interagisci();
 				}
-				break;
-			case 2:
-				Integer removeId = Utilities.userInput(Integer.class, "Inserisci l'id del prodotto da rimuovere");
-				Boolean b1 = negozioDao.rimuoviProdotto(removeId);
-				if(b1) {
-					System.out.println("rimosso con successo");
-				} else {
-					System.err.println("non è stato possibile rimuovere");
-				}
-				break;
-			case 3:
-				System.out.println("** Arrivederci e grazie... **");
-				isStarted = !isStarted;
-				break;
-			default:
-				interagisci();
 			}
 		}
 		
