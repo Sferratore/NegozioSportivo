@@ -14,20 +14,51 @@ public class Menu {
 
 	// metodo per l'avvio del servizio
 	public void interagisci() {
-		Utente u = negozioDao.getUtenteLoggato();
 		
-		if(!u) {
-			System.out.println("** Nessun utente loggato, registrati! **");
+		Integer startChoice = Utilities.userInput(Integer.class, "1 - Registrati"
+				+ "\n2 - Loggati");
+		
+		switch(startChoice) {
+		case 1 : 
+			System.out.println("** Registrati! **");
 			String username = Utilities.userInput(String.class, "Inserisci nuovo nome utente: ");
-			String password = Utilities.userInput(String.class, "Inscerisci la nuova password");
-			Boolean b = negozioDao.login(username, password);
+			String password = Utilities.userInput(String.class, "Inscerisci la nuova password: ");
+			String email = Utilities.userInput(String.class, "Inscerisci la tua mail: ");
+			String nome = Utilities.userInput(String.class, "Inscerisci il tuo nome: ");
+			String cognome = Utilities.userInput(String.class, "Inscerisci il tuo cognome: ");
+			String isAdminString = Utilities.userInput(String.class, "Sei un admin (Y/N): ").toLowerCase();
+			Boolean isAdmin = isAdminString.equals("y") ? true: false;
+			
+			Utente newUtente = new Utente(username, email, password, nome, cognome, isAdmin);
+			
+			Boolean b = negozioDao.registra(newUtente);
 			if(b){
-				System.out.println("loggato con successo");
+				System.out.println("registrato con successo");
 			} else {
-				System.err.println("non sei riuscito a loggarti");
+				System.err.println("non sei riuscito a registrarti");
 				interagisci();
 			}
+			break;
+		case 2 : 
+			System.out.println("** Menu login, loggati! **");
+			String username1 = Utilities.userInput(String.class, "Inserisci nome utente: ");
+			String password1 = Utilities.userInput(String.class, "Inscerisci la nuova password: ");
+			
+			Boolean b1 = negozioDao.login(username1, password1);
+			if(b1){
+				System.out.println("loggato con successo");
+			} else {
+				System.err.println("non sei riuscito a loggato");
+				interagisci();
+			}
+			break;
+		default : 
+			interagisci();
+			break;
 		}
+		
+		
+		Utente u = negozioDao.getUtenteLoggato();
 		
 		if(!u.isAdmin()) {
 			while (isStarted) {
@@ -115,4 +146,5 @@ public class Menu {
 		}
 		
 	}
+	
 }
