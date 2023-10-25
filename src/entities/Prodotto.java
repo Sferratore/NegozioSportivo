@@ -1,6 +1,6 @@
 package entities;
 
-/**
+/**s
  * Classe che rappresenta i prodotti di un negozio sportivo.
  */
 public class Prodotto {
@@ -14,6 +14,13 @@ public class Prodotto {
 	// Costruttori
 	public Prodotto() {
 
+	}
+	
+	public Prodotto(String nome, String descrizione, double prezzo, int quantità) {
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.prezzo = prezzo;
+		this.quantità = quantità;
 	}
 	
 	public Prodotto(int id, String nome, String descrizione, double prezzo, int quantità) {
