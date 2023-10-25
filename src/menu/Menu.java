@@ -20,7 +20,7 @@ public class Menu {
 			String username = Utilities.userInput(String.class, "Inserisci nuovo nome utente: ");
 			String password = Utilities.userInput(String.class, "Inscerisci la nuova password");
 			Boolean b = negozioDao.login(username, password);
-			if(b)){
+			if(b){
 				System.out.println("loggato con successo");
 			} else {
 				System.err.println("non sei riuscito a loggarti");
