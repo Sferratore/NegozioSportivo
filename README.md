@@ -1,5 +1,34 @@
 # NegozioSportivo
-daje Roma
+
+Benvenuti nella Sport Store Web Application, un'applicazione per la gestione di un negozio sportivo online. Questa applicazione consente agli utenti di registrarsi, effettuare l'accesso, esplorare i prodotti disponibili nel negozio, aggiungere prodotti al carrello, effettuare acquisti e altro ancora.
+
+## Descrizione del Progetto
+
+L'applicazione è stata sviluppata in Java ed è basata su un'architettura client-server. Utilizza un database MySQL per la gestione dei dati degli utenti e dei prodotti disponibili nel negozio.
+
+## Funzionalità Principali
+
+- **Registrazione**: Gli utenti possono registrare un nuovo account inserendo informazioni come nome utente, password, email, nome e cognome.
+
+- **Accesso**: Gli utenti registrati possono effettuare l'accesso utilizzando il loro nome utente e la password.
+
+- **Esplorazione dei Prodotti**: Gli utenti possono esplorare l'elenco dei prodotti disponibili nel negozio e visualizzare dettagli come nome, descrizione, prezzo e disponibilità.
+
+- **Gestione del Carrello**: Gli utenti possono aggiungere prodotti al proprio carrello, specificando la quantità desiderata. Possono anche rimuovere prodotti dal carrello.
+
+- **Acquisto di Prodotti**: Gli utenti possono confermare l'acquisto dei prodotti presenti nel loro carrello. Il totale dell'acquisto verrà calcolato e gli utenti possono confermare o annullare l'acquisto.
+
+- **Gestione degli Amministratori**: Gli utenti amministratori hanno accesso a funzionalità aggiuntive, come l'aggiunta e la rimozione di prodotti dal negozio.
+
+## Requisiti
+
+- Java JDK 21 (versione consigliata)
+- MySQL Server
+- JDBC Connector/J versione >=8
+
+
+
+# Gestione Task Progetto
 
 TASK 1: stabilire le specifiche.
 
