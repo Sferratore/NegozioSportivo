@@ -69,7 +69,7 @@ public class Menu {
 		if (!u.isAdmin()) {
 			while (isStarted) {
 				Integer userChoice = Utilities.userInput(Integer.class, "Benvenuto User:" + "\n1 - Mostra tutti i prodotti"
-						+ "\n2 - Aggiungi al carrello" + "\n3 - Rimuovi dal carrello" + "\n4 - Acquista" + "\n5 - Visualizza Carrello" + "\n0 - Esci");
+						+ "\n2 - Aggiungi al carrello" + "\n3 - Rimuovi dal carrello" + "\n4 - Acquista" + "\n5 - Visualizza Carrello" + "\n6 - Ricerca Prodotto per nome" + "\n0 - Esci");
 
 				switch (userChoice) {
 				case 1:
@@ -106,6 +106,19 @@ public class Menu {
 					break;
 				case 5:
 					System.out.println(u.getCarrello());
+					break;
+				case 6:
+					boolean flag = false;
+					String nome = Utilities.userInput(String.class, "Inserisci il nome del prodotto: ");
+					for (Prodotto p : negozioDao.getNegozio()) {
+						if(p.getNome().equals(nome)) {
+							System.out.println(p.toString());
+							flag = true;
+						}
+					}
+					if(!flag) {
+						System.out.println("Prodotto non trovato :-(");
+					}
 					break;
 				case 0:
 					System.out.println("** Arrivederci e grazie... **");
