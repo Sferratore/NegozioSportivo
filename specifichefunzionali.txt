@@ -1,0 +1,38 @@
+---Utente
+Username
+email
+password
+Nome
+cognome
+carrello (arrayList prodotti)
+isAdmin
+
+--Prodotto
+id
+nome
+descrizione
+prezzo
+quantità
+
+
+--Interfaccia negozio(DAO)
+CAMPI
+UtenteLoggato: memorizza utente loggato
+ArrayList<Prodotto> negozio: contiene tutti i prodotti del negozio
+
+METODI
+
+ //Se non è admin 
+Registrazione: Inserimento nuovo utente in db
+Login: Controllo su db delle credenziali ed eventuale inserimento in UtenteLoggato
+MostraProdotti: stampa arraylist
+Aggiungi al carrello: Passa Id, aggiungi al carrello
+Rimuovi dal carrello: Passa Id, rimuovi
+Compra: chiedi il pagamento e la conferma
+
+//Se è admin
+Aggiungi prodotto alla lista
+Rimuovi prodotto dalla lista
+
+
+

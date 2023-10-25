@@ -1,0 +1,42 @@
+---------Utente----------
+String username (PK)
+String email
+String password
+String nome
+String cognome
+ArrayList<Prodotto> carrello 
+boolean isAdmin
+
+Getters, Setters, ToString
+
+----------Prodotto---------
+
+int id
+String nome
+String descrizione
+double (funziona meglio di float vi prego) prezzo
+int quantità
+
+Getters, Setters, ToString
+
+
+-----------DAO------------
+
+CAMPI
+
+Utente UtenteLoggato
+ArrayList<Prodotto> negozio
+
+METODI
+
+//Se non è admin 
+boolean registra(Utente u);
+boolean login(String username, Sting password);
+void (semplicemente rifai il toString e chiamalo così) MostraProdotti
+boolean aggiungiAlCarrello(int idProdotto)
+boolean rimuoviDalCarrello(int idProdotto)
+boolean acquista() 
+
+//Se è admin
+boolean aggiungiProdotto(prodotto P)
+boolean rimuoviProdotto(int prodottoId)
