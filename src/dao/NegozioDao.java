@@ -71,7 +71,7 @@ public class NegozioDao {
                 u.setAdmin(rs.getBoolean("isAdmin"));
             } else {
                 System.err.println("nessun utente con queste credeziali");
-                registra(u);
+                return false;
             }
         } 
         catch (SQLException e) {
@@ -123,11 +123,12 @@ public class NegozioDao {
 		return true;
 	}
 
-	public boolean aggiungiAlCarrello(int idProdotto) {
+	public boolean aggiungiAlCarrello(int idProdotto, int qt) {
 		try {
-			String selectString = "SELECT * FROM Prodotto WHERE id = ?";
+			String selectString = "SELECT * FROM Prodotto WHERE id = ? AND quantità >= ?";
 			PreparedStatement selectSt = this.connection.prepareStatement(selectString);
 			selectSt.setInt(1, idProdotto);
+			selectSt.setInt(2, qt);
 			ResultSet result = selectSt.executeQuery();
 
 			if (result.next()) {
@@ -136,7 +137,7 @@ public class NegozioDao {
 				p.setNome(result.getString("nome"));
 				p.setDescrizione(result.getString("descrizione"));
 				p.setPrezzo(result.getDouble("prezzo"));
-				p.setQuantità(result.getInt("quantità"));
+				p.setQuantità(qt);
 
 				this.UtenteLoggato.getCarrello().add(p);
 
@@ -144,7 +145,7 @@ public class NegozioDao {
 				PreparedStatement prpSt = this.connection.prepareStatement(insertString);
 				prpSt.setString(1, this.UtenteLoggato.getUsername());
 				prpSt.setInt(2, p.getId());
-				prpSt.setInt(3, 1);
+				prpSt.setInt(3, qt);
 				prpSt.executeUpdate();
 
 				syncDb(); // resyncing
@@ -281,13 +282,20 @@ public class NegozioDao {
 					int idProdotto = p.getId();
 					int quantitaCarrello = p.getQuantità();
 
-					// Aggiorna la quantità nel database
+					
 					String updateString = "UPDATE Prodotto SET quantità = quantità - ? WHERE id = ?";
 					PreparedStatement updateSt = connection.prepareStatement(updateString);
 					updateSt.setInt(1, quantitaCarrello);
 					updateSt.setInt(2, idProdotto);
 					updateSt.executeUpdate();
 
+					
+	                String insertAcquistoString = "INSERT INTO Acquisti (username, prodotto_id, quantita_acquistata) VALUES (?, ?, ?)";
+	                PreparedStatement insertAcquistoSt = connection.prepareStatement(insertAcquistoString);
+	                insertAcquistoSt.setString(1, this.UtenteLoggato.getUsername());
+	                insertAcquistoSt.setInt(2, idProdotto);
+	                insertAcquistoSt.setInt(3, quantitaCarrello);
+	                insertAcquistoSt.executeUpdate();
 				}
 
 				this.UtenteLoggato.getCarrello().clear();
@@ -295,7 +303,8 @@ public class NegozioDao {
 				String deleteString = "DELETE FROM Carrello WHERE username = ?";
 				PreparedStatement prpSt = this.connection.prepareStatement(deleteString);
 				prpSt.setString(1, this.UtenteLoggato.getUsername());
-				prpSt.executeUpdate();
+				prpSt.executeUpdate();	
+				
 
 				System.out.println("Pagamento di " + totale + " euro eseguito con successo.");
 

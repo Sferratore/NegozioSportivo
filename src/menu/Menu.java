@@ -26,8 +26,7 @@ public class Menu {
 			String email = Utilities.userInput(String.class, "Inscerisci la tua mail: ");
 			String nome = Utilities.userInput(String.class, "Inscerisci il tuo nome: ");
 			String cognome = Utilities.userInput(String.class, "Inscerisci il tuo cognome: ");
-			String isAdminString = Utilities.userInput(String.class, "Sei un admin (Y/N): ").toLowerCase();
-			Boolean isAdmin = isAdminString.equals("y") ? true: false;
+			Boolean isAdmin = false;
 			
 			Utente newUtente = new Utente(username, email, password, nome, cognome, isAdmin);
 			
@@ -48,7 +47,7 @@ public class Menu {
 			if(b1){
 				System.out.println("loggato con successo");
 			} else {
-				System.err.println("non sei riuscito a loggato");
+				System.err.println("non sei riuscito a loggare");
 				interagisci();
 			}
 			break;
@@ -63,7 +62,7 @@ public class Menu {
 		if(!u.isAdmin()) {
 			while (isStarted) {
 				Integer userChoice = Utilities.userInput(Integer.class, "Benvenuto User:" + "\n1 - Mostra tutti i prodotti"
-						+ "\n2 - Aggiungi al carrello" + "\n3 - Rimuovi dal carrello" + "\n4 - Acquista" + "\n5 - Esci");
+						+ "\n2 - Aggiungi al carrello" + "\n3 - Rimuovi dal carrello" + "\n4 - Acquista" + "\n5 - Visualizza Carrello" + "\n0 - Esci");
 				
 				switch (userChoice) {
 				case 1:
@@ -73,7 +72,8 @@ public class Menu {
 					break;
 				case 2:
 					Integer addId = Utilities.userInput(Integer.class, "Inserisci l'id del prodotto da acquistare");
-					Boolean b = negozioDao.aggiungiAlCarrello(addId);
+					Integer addQt = Utilities.userInput(Integer.class, "Inserisci la quantità");
+					Boolean b = negozioDao.aggiungiAlCarrello(addId, addQt);
 					if(b) {
 						System.out.println("aggiunto con successo");
 					} else {
@@ -98,6 +98,9 @@ public class Menu {
 					}
 					break;
 				case 5:
+					System.out.println(u.getCarrello());
+					break;
+				case 0:
 					System.out.println("** Arrivederci e grazie... **");
 					isStarted = !isStarted;
 					break;
@@ -109,7 +112,7 @@ public class Menu {
 		} else if (u.isAdmin()) {
 			while (isStarted) { 
 				Integer adminChoice = Utilities.userInput(Integer.class, "Benvenuto Admin:" + "\n1 - Aggiungi un Prodotto"
-						+ "\n2 - Rimuovi un Prodotto" + "\n3 - Esci");
+						+ "\n2 - Rimuovi un Prodotto" + "\n3 - Visualizza Prodotti" + "\n0 - Esci");
 				
 				switch (adminChoice) {
 				case 1:
@@ -136,6 +139,9 @@ public class Menu {
 					}
 					break;
 				case 3:
+					System.out.println(negozioDao.getNegozio());
+					break;
+				case 0:
 					System.out.println("** Arrivederci e grazie... **");
 					isStarted = !isStarted;
 					break;
