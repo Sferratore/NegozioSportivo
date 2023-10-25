@@ -1,10 +1,13 @@
 package test;
 
+import dao.*;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
+		NegozioDao n = new NegozioDao();
+		System.out.println(n.mostraProdotti());
 	}
 
 }

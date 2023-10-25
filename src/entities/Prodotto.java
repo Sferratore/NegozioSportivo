@@ -4,6 +4,7 @@ package entities;
  * Classe che rappresenta i prodotti di un negozio sportivo.
  */
 public class Prodotto {
+	
 	private int id; // PK
 	private String nome;
 	private String descrizione;

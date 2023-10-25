@@ -21,6 +21,7 @@ Getters, Setters, ToString
 
 
 -----------DAO------------
+NegozioDao
 
 CAMPI
 

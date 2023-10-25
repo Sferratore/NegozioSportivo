@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Classe che rappresenta l'utente di un negozio sportivo.
  */
 public class Utente {
+	
 	private String username; // PK
 	private String email;
 	private String password;
