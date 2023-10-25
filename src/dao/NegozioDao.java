@@ -26,6 +26,51 @@ public class NegozioDao {
 		connettiAlDb();
 	}
 
+	
+	
+	
+	public ArrayList<Prodotto> getNegozio() {
+		return negozio;
+	}
+
+
+
+
+	public void setNegozio(ArrayList<Prodotto> negozio) {
+		this.negozio = negozio;
+	}
+
+
+
+
+	public ArrayList<Utente> getListaUtenti() {
+		return listaUtenti;
+	}
+
+
+
+
+	public void setListaUtenti(ArrayList<Utente> listaUtenti) {
+		this.listaUtenti = listaUtenti;
+	}
+
+
+
+
+	public Utente getUtenteLoggato() {
+		return UtenteLoggato;
+	}
+
+
+
+
+	public void setUtenteLoggato(Utente utenteLoggato) {
+		UtenteLoggato = utenteLoggato;
+	}
+
+
+
+
 	public String connettiAlDb() {
 
 		String connectionString = String.format("jdbc:mysql://localhost:3306/%s", dbName);
