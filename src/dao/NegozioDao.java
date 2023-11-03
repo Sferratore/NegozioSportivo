@@ -116,7 +116,7 @@ public class NegozioDao {
 		// Imposta l'utente loggato e sincronizza con il database
 		setUtenteLoggato(u);
 		syncDb();
-
+		syncCarrello();
 		return true;
 	}
 
@@ -180,22 +180,11 @@ public class NegozioDao {
 			ResultSet result = selectSt.executeQuery();
 
 			if (result.next()) {
-				// Creazione di un oggetto Prodotto con i dati recuperati dal database
-				Prodotto p = new Prodotto();
-				p.setId(result.getInt("id"));
-				p.setNome(result.getString("nome"));
-				p.setDescrizione(result.getString("descrizione"));
-				p.setPrezzo(result.getDouble("prezzo"));
-				p.setQuantità(qt);
-
-				// Aggiunta del prodotto al carrello dell'utente
-				this.UtenteLoggato.getCarrello().add(p);
-
 				// Creazione della query SQL per inserire il prodotto nel carrello
 				String dbOperation = "INSERT INTO Carrello (username, prodotto_id, quantita_carrello) VALUES (?, ?, ?);";
 				PreparedStatement prpSt = this.connection.prepareStatement(dbOperation);
 				prpSt.setString(1, this.UtenteLoggato.getUsername());
-				prpSt.setInt(2, p.getId());
+				prpSt.setInt(2, idProdotto);
 				prpSt.setInt(3, qt);
 				prpSt.executeUpdate();
 
@@ -208,7 +197,8 @@ public class NegozioDao {
 
 				// Sincronizzazione con il database
 				syncDb(); // Riesegue la sincronizzazione con il database
-
+				syncCarrello();
+				
 				return true;
 			} else {
 				System.out.println("Prodotto non trovato nel database.");
@@ -245,23 +235,23 @@ public class NegozioDao {
 				prpSt.setInt(2, idProdotto);
 				prpSt.executeUpdate();
 
-
 				// Aggiorna la quantità del prodotto nel negozio
 				deleteString = "UPDATE Prodotto SET quantità = quantità + ? WHERE id = ?";
 				prpSt = connection.prepareStatement(deleteString);
-				
+
 				Prodotto p = new Prodotto();
-				for(int i = 0; i < this.UtenteLoggato.getCarrello().size(); i++) {
-					if(this.UtenteLoggato.getCarrello().get(i).getId() == idProdotto) {
+				for (int i = 0; i < this.UtenteLoggato.getCarrello().size(); i++) {
+					if (this.UtenteLoggato.getCarrello().get(i).getId() == idProdotto) {
 						p = this.UtenteLoggato.getCarrello().get(i);
 					}
 				}
-				
+
 				prpSt.setInt(1, p.getQuantità());
 				prpSt.setInt(2, idProdotto);
 				prpSt.executeUpdate();
 
 				syncDb();
+				syncCarrello();
 				return true;
 			} else {
 				System.out.println("Prodotto non trovato nel database.");
@@ -415,7 +405,7 @@ public class NegozioDao {
 				System.out.println("Pagamento di " + totale + " euro eseguito con successo.");
 
 				syncDb(); // Sincronizza il database
-
+				syncCarrello();
 				return true;
 			} else {
 				System.out.println("Acquisto annullato.");
@@ -522,6 +512,50 @@ public class NegozioDao {
 			System.err.println("Qualcosa è andato storto con le operazioni SQL: " + e.toString());
 			return false;
 		}
+	}
+
+	
+	/**
+	 * Sincronizza il carrello dell'utente in memoria.
+	 *
+	 * @return True se la sincronizzazione è riuscita, altrimenti False.
+	 */
+	private boolean syncCarrello() {
+
+		try {
+
+			ArrayList<Prodotto> carrelloDaAggiungere = new ArrayList<Prodotto>();
+
+			// Sincronizzazione carrello
+			PreparedStatement prpSt = this.connection.prepareStatement("SELECT P.*, C.quantita_carrello\n"
+					+ "FROM Prodotto P\n" + "INNER JOIN Carrello C ON P.id = C.prodotto_id\n"
+					+ "WHERE C.username = ?;");
+			
+			prpSt.setString(1, this.UtenteLoggato.getUsername());
+
+			ResultSet rs = prpSt.executeQuery();
+
+			while (rs.next()) {
+				Prodotto p = new Prodotto();
+				p.setId(rs.getInt("id"));
+				p.setNome(rs.getString("nome"));
+				p.setDescrizione(rs.getString("descrizione"));
+				p.setPrezzo(rs.getDouble("prezzo"));
+				p.setQuantità(rs.getInt("quantita_carrello"));
+				carrelloDaAggiungere.add(p);
+			}
+
+			this.UtenteLoggato.setCarrello(carrelloDaAggiungere);
+			return true;
+			
+		} catch (SQLException e) {
+			System.err.println("Qualcosa è andato storto con le operazioni SQL: " + e.toString());
+			return false;
+		} catch (Exception e) {
+			System.err.println("Qualcosa è andato storto con le operazioni SQL: " + e.toString());
+			return false;
+		}
+
 	}
 
 	/**
