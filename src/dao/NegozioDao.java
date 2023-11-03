@@ -169,6 +169,7 @@ public class NegozioDao {
 	 */
 	public boolean aggiungiAlCarrello(int idProdotto, int qt) {
 	    try {
+	    	
 	        // Creazione della query SQL per selezionare il prodotto con l'ID specificato e la quantità disponibile sufficiente
 	        String selectString = "SELECT * FROM Prodotto WHERE id = ? AND quantità >= ?";
 	        PreparedStatement selectSt = this.connection.prepareStatement(selectString);
@@ -320,11 +321,39 @@ public class NegozioDao {
 	public boolean rimuoviProdotto(int prodottoId) {
 	    try {
 	        Connection conn = this.connection;
-
-	        // Creazione della query SQL per rimuovere un prodotto dal negozio
-	        String query = "delete from prodotto where id=?";
+	        
+	        // Creazione della query SQL per rimuovere un prodotto dalla tabella acquisti
+	        String query = "delete from acquisti where prodotto_id=?";
 
 	        PreparedStatement prstmt = conn.prepareStatement(query);
+
+	        prstmt.setInt(1, prodottoId);
+
+	        prstmt.execute(); // Esecuzione della query per rimuovere il prodotto
+
+	        // Creazione della query SQL per rimuovere un prodotto dal carrello
+	        query = "delete from carrello where id=?";
+
+	        prstmt = conn.prepareStatement(query);
+
+	        prstmt.setInt(1, prodottoId);
+
+	        prstmt.execute(); // Esecuzione della query per rimuovere il prodotto
+	        
+	        // Creazione della query SQL per rimuovere un prodotto dal negozio
+	        query = "delete from acquisti where id=?";
+
+	        prstmt = conn.prepareStatement(query);
+
+	        prstmt.setInt(1, prodottoId);
+
+	        prstmt.execute(); // Esecuzione della query per rimuovere il prodotto
+
+	        
+	        // Creazione della query SQL per rimuovere un prodotto dal negozio
+	        query = "delete from prodotto where id=?";
+
+	        prstmt = conn.prepareStatement(query);
 
 	        prstmt.setInt(1, prodottoId);
 
