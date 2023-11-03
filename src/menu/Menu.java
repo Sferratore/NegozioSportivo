@@ -30,10 +30,10 @@ public class Menu {
 		case 1:
 			System.out.println("** Registrati! **");
 			String username = Utilities.userInput(String.class, "Inserisci nuovo nome utente: ");
-			String password = Utilities.userInput(String.class, "Inscerisci la nuova password: ");
-			String email = Utilities.userInput(String.class, "Inscerisci la tua mail: ");
-			String nome = Utilities.userInput(String.class, "Inscerisci il tuo nome: ");
-			String cognome = Utilities.userInput(String.class, "Inscerisci il tuo cognome: ");
+			String password = Utilities.userInput(String.class, "Inserisci la nuova password: ");
+			String email = Utilities.userInput(String.class, "Inserisci la tua mail: ");
+			String nome = Utilities.userInput(String.class, "Inserisci il tuo nome: ");
+			String cognome = Utilities.userInput(String.class, "Inserisci il tuo cognome: ");
 			Boolean isAdmin = false;
 
 			Utente newUtente = new Utente(username, email, password, nome, cognome, isAdmin);
@@ -49,7 +49,7 @@ public class Menu {
 		case 2:
 			System.out.println("** Menu login, loggati! **");
 			String username1 = Utilities.userInput(String.class, "Inserisci nome utente: ");
-			String password1 = Utilities.userInput(String.class, "Inscerisci la nuova password: ");
+			String password1 = Utilities.userInput(String.class, "Inserisci la nuova password: ");
 
 			Boolean b1 = negozioDao.login(username1, password1);
 			if (b1) {
